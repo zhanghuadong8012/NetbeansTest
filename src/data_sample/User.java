@@ -5,42 +5,46 @@
  */
 package data_sample;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 /**
  *
  * @author zhanghuadong
  */
 public class User {
-    private int id;
-    private String username,password;
+
+    private SimpleIntegerProperty id;
+    private SimpleStringProperty username, password;
 
     public User(int id, String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
+        this.id = new SimpleIntegerProperty(id);
+        this.username = new SimpleStringProperty(username);
+        this.password = new SimpleStringProperty(password);
     }
 
     public int getId() {
-        return id;
+        return id.get();
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id.set(id);
     }
 
     public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+        return username.get();
     }
 
     public String getPassword() {
-        return password;
+        return password.get();
+    }
+
+    public void setUsername(String username) {
+        this.username.set(username);
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password.set(password);
     }
-    
+
 }

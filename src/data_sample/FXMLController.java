@@ -43,7 +43,7 @@ public class FXMLController implements Initializable {
     @FXML
     private TableView<User> tableView;
     @FXML
-    private TextField fullnameTextField;
+    private TextField idTextField;
     @FXML
     private TextField emailTextField;
     @FXML
@@ -79,36 +79,27 @@ public class FXMLController implements Initializable {
         
 //        tableView.getItems().addAll(list);
         tableView.setItems(list);
-
-        
     }    
 
     private ObservableList<User> getUsers() throws SQLException {
         ObservableList<User> users = FXCollections.observableArrayList();
-        User user;
-        int id;
-        String username,password;
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/javafx_registration", "root", "password");
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from registration");
         while(resultSet.next()){
-            id = resultSet.getInt("id");
-            username = resultSet.getString("full_name");
-            password = resultSet.getString("password");
-            user = new User(id,username,password);
+            User user = new User(resultSet.getInt("id"),resultSet.getString("full_name"),resultSet.getString("password"));
             users.add(user);
-            
         }
         return users;
     }
 
     @FXML
     private void addTableViewButton(ActionEvent event) {
-        if(fullnameTextField.getText().matches("[1-9][0-9$]*")){
-            User user = new User(Integer.parseInt(fullnameTextField.getText()),emailTextField.getText(),passwordTextField.getText());
+        if(idTextField.getText().matches("^[0-9]+$")){
+            User user = new User(Integer.parseInt(idTextField.getText()),emailTextField.getText(),passwordTextField.getText());
             tableView.getItems().add(user);
 
-            fullnameTextField.clear();
+            idTextField.clear();
             emailTextField.clear();
             passwordTextField.clear();
         }
